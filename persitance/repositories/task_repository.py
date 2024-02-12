@@ -12,21 +12,21 @@ class TaskRepository:
     def create_task(self, userId: int, date: dt.date, time: dt.time, description: str):
         time = dt.time(time.hour, time.minute) # solo tomar hora y minutos de la variable time
 
-        # hacer la query
         query = "INSERT INTO tasks (user_id, date, time, description) VALUES (%(userId)s, %(task_date)s, %(task_time)s, %(task_description)s)"
         cursor = self.db.connection.cursor()
         cursor.execute(query, {'userId': userId, 'task_date': date, 'task_time': time, 'task_description': description})
         self.db.connection.commit()
         cursor.close()
+        return task
 
 
     def get_user_tasks(self, userId: int):
         query = "SELECT * FROM tasks WHERE user_id = %s"
         cursor = self.db.connection.cursor()
         cursor.execute(query, (userId,))
-        tasks = cursor.fetchall()
+        task = cursor.fetchall()
         cursor.close()
-        return tasks
+        return task
 
     def get_task(self, taskId: int):
         query = "SELECT * FROM tasks WHERE id = %s"
