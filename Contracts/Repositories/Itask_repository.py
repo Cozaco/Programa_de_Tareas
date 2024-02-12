@@ -3,7 +3,7 @@
 def create_task(self, userId: int, task: str, date: str):
     pass
 
-def get_tasks(self, userId: int):
+def get_user_tasks(self, userId: int):
     pass
 
 def get_task(self, taskId: int):

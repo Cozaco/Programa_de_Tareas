@@ -1,8 +1,6 @@
 import datetime as dt
 import sys
 sys.path.insert(0, 'C:/Users/franc/OneDrive/Documentos/TaskManager/persitance')
-
-
 from SqlDataSource import SqlConnection
 
 class TaskRepository:
@@ -17,7 +15,6 @@ class TaskRepository:
         cursor.execute(query, {'userId': userId, 'task_date': date, 'task_time': time, 'task_description': description})
         self.db.connection.commit()
         cursor.close()
-        return task
 
 
     def get_user_tasks(self, userId: int):
@@ -54,8 +51,8 @@ class TaskRepository:
 
 # hacer una prueba
         
-db = SqlConnection()
-task_repo = TaskRepository(db)
+# db = SqlConnection()
+# task_repo = TaskRepository(db)
 # task_repo.create_task(1, dt.date.today(), dt.datetime.now().time(), "tarea creada 5")
-task = task_repo.delete_task(4)
-print(task)
+# task = task_repo.delete_task(4)
+# print(task)
