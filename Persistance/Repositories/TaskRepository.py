@@ -1,18 +1,23 @@
 import datetime as dt
 import sys
-sys.path.insert(0, 'C:/Users/franc/OneDrive/Documentos/TaskManager/persitance')
-from SqlDataSource import SqlConnection
 
-class TaskRepository:
+# Se importa os.path para poder importar desde el directorio padre
+from os.path import dirname, abspath
+d = dirname(dirname(dirname(abspath(__file__))))
+sys.path.append(d)
+
+from Persistance.SqlDataSource import SqlConnection
+from Contracts.Repositories.ITaskRepository import ITaskRepository
+from Contracts.Models.task import Task
+
+class TaskRepository(ITaskRepository):
     def __init__(self, db: SqlConnection):
         self.db = db
         
-    def create_task(self, userId: int, date: dt.date, time: dt.time, description: str):
-        time = dt.time(time.hour, time.minute) # solo tomar hora y minutos de la variable time
-
+    def create_task(self, task: Task):
         query = "INSERT INTO tasks (user_id, date, time, description) VALUES (%(userId)s, %(task_date)s, %(task_time)s, %(task_description)s)"
         cursor = self.db.connection.cursor()
-        cursor.execute(query, {'userId': userId, 'task_date': date, 'task_time': time, 'task_description': description})
+        cursor.execute(query, {'userId': task.userId, 'task_date': task.date, 'task_time': task.time, 'task_description': task.description})
         self.db.connection.commit()
         cursor.close()
 
@@ -33,12 +38,11 @@ class TaskRepository:
         cursor.close()
         return task
 
-    def edit_task(self, taskId: int, date: dt.date, time: dt.time, description: str):
-        time = dt.time(time.hour, time.minute)
+    def edit_task(self, task: Task):
 
         query = "UPDATE tasks SET date = %s, time = %s, description = %s WHERE id = %s"
         cursor = self.db.connection.cursor()
-        cursor.execute(query, (date, time, description, taskId))
+        cursor.execute(query, (task.date, task.time, task.description, task.id))
         self.db.connection.commit()
         cursor.close()
 
@@ -53,6 +57,10 @@ class TaskRepository:
         
 # db = SqlConnection()
 # task_repo = TaskRepository(db)
-# task_repo.create_task(1, dt.date.today(), dt.datetime.now().time(), "tarea creada 5")
-# task = task_repo.delete_task(4)
-# print(task)
+
+#print(task_repo.get_task(6))
+
+# task = Task(None, dt.time(12, 30), dt.date(2021, 5, 20), "esta es otra prueba", 1)
+
+# task_repo.create_task(task)
+
