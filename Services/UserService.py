@@ -6,7 +6,7 @@ d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 from Contracts.Models.user import User
-from Contracts.Services.IUserService import IUserService
+from Contracts.Interfaces.Services.IUserService import IUserService
 from Persistance.Repositories.TaskRepository import TaskRepository
 from Persistance.Repositories.UserRepository import UserRepository
 

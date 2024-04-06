@@ -6,7 +6,7 @@ d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 from Contracts.Models.task import Task
-from Contracts.Services.ITaskService import ITaskService
+from Contracts.Interfaces.Services.ITaskService import ITaskService
 from Persistance.Repositories.TaskRepository import TaskRepository
 from Persistance.SqlDataSource import SqlConnection
 
@@ -31,7 +31,7 @@ class TaskService(ITaskService):
         return task
     
 # hacer una prueba
-db = SqlConnection()
-task_service = TaskService(TaskRepository(db))
+#db = SqlConnection()
+#task_service = TaskService(TaskRepository(db))
 
-print(task_service.get_task(6))
+#print(task_service.get_task(6))

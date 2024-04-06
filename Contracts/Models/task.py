@@ -1,5 +1,7 @@
+import datetime as dt
+
 class Task:
-    def __init__(self, id, time, date, description, userId):
+    def __init__(self, time: dt, date: dt, description, userId, id=None):
         self.id = id
         self.time = time
         self.date = date
